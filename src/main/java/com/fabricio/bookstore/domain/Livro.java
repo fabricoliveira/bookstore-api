@@ -9,8 +9,7 @@ import java.io.Serializable;
 
 @Data
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 @Entity(name = "livro")
 @Table(name = "livro")
 public class Livro implements Serializable {

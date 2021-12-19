@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Builder
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "categoria")
 @Table(name = "categoria")
 public class Categoria implements Serializable {
