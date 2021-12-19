@@ -1,10 +1,11 @@
 package com.fabricio.bookstore.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +13,28 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Categoria {
+@Entity(name = "categoria")
+@Table(name = "categoria")
+public class Categoria implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @EqualsAndHashCode.Include
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "categoria_id")
     private Integer id;
 
-    private String name;
+    @NotNull
+    @Size(min = 3, max = 100)
+    @Column(name = "nome", length = 100)
+    private String nome;
+
+    @NotNull
+    @Size(min = 3, max = 100)
+    @Column(name = "descricao", length = 100)
     private String descricao;
 
+    @OneToMany(mappedBy = "categoria")
     private List<Livro> livros = new ArrayList<>();
 }
