@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,5 +41,11 @@ public class CategoriaResource {
                 .buildAndExpand(categoria.getId())
                 .toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoriaDTO> update(@PathVariable("id") Integer id, @RequestBody Map<Object, Object> categoriaDTO) {
+        Categoria categoria = categoriaService.update(id, categoriaDTO);
+        return ResponseEntity.ok().body(new CategoriaDTO(categoria));
     }
 }
