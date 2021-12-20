@@ -56,7 +56,10 @@ public class CategoriaService {
     }
 
     public void delete(Integer id) {
-        Categoria categoria = findById(id);
-        categoriaRepository.delete(categoria);
+        try {
+            categoriaRepository.deleteById(id);
+        } catch(org.springframework.dao.DataIntegrityViolationException e) {
+            throw new com.fabricio.bookstore.exceptions.DataIntegrityViolationException("O recurso não pode ser deletado, possui relacionamento!");
+        }
     }
 }
