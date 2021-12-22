@@ -58,4 +58,8 @@ public class LivroService {
         livro.setCategoria(categoriaService.findById(categoriaId));
         return livroRepository.save(livro);
     }
+
+    public void delete(Integer id) {
+        livroRepository.delete(findById(id));
+    }
 }

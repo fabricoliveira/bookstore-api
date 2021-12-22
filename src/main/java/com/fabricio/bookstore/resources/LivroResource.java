@@ -5,6 +5,7 @@ import com.fabricio.bookstore.domain.dto.LivroDTO;
 import com.fabricio.bookstore.exceptions.MethodArgumentNotValidException;
 import com.fabricio.bookstore.services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -48,5 +49,11 @@ public class LivroResource {
                 .buildAndExpand(livro.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(livro);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") Integer id) {
+        livroService.delete(id);
     }
 }
