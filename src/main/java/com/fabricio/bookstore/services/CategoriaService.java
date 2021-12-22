@@ -6,6 +6,7 @@ import com.fabricio.bookstore.exceptions.ResourceNotFoundException;
 import com.fabricio.bookstore.repositories.CategoriaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,9 +63,10 @@ public class CategoriaService {
 
     public void delete(Integer id) {
         try {
-            categoriaRepository.deleteById(id);
+            categoriaRepository.delete(findById(id));
         } catch(org.springframework.dao.DataIntegrityViolationException e) {
             throw new com.fabricio.bookstore.exceptions.DataIntegrityViolationException("O recurso não pode ser deletado, possui relacionamento!");
+        } catch (EmptyResultDataAccessException e) {
         }
     }
 }
