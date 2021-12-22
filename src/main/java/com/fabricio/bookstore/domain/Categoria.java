@@ -1,5 +1,6 @@
 package com.fabricio.bookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,6 +36,7 @@ public class Categoria implements Serializable {
     @Column(name = "descricao", length = 100)
     private String descricao;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "categoria")
     private List<Livro> livros = new ArrayList<>();
 }

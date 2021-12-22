@@ -1,6 +1,6 @@
 package com.fabricio.bookstore.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -39,7 +39,7 @@ public class Livro implements Serializable {
     @Column(name = "texto", length = 4000)
     private String texto;
 
-    @JsonIgnore
+    @JsonBackReference
     @NotNull
     @ManyToOne
     @JoinColumn(name = "categoria_id")
