@@ -12,8 +12,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Entity(name = "livro")
-@Table(name = "livro")
+@Entity(name = "Livro")
+@Table(name = "Livro")
 public class Livro implements Serializable {
 
     private static final long serialVersionUID = 1L;

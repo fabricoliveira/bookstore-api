@@ -13,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Entity(name = "categoria")
-@Table(name = "categoria")
+@Entity(name = "Categoria")
+@Table(name = "Categoria")
 public class Categoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
