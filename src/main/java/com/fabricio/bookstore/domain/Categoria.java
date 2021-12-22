@@ -26,14 +26,14 @@ public class Categoria implements Serializable {
     @Column(name = "categoria_id")
     private Integer id;
 
-    @NotNull
-    @Size(min = 3, max = 100)
-    @Column(name = "nome", length = 100)
+    @NotNull(message = "O campo NOME não pode estar nulo")
+    @Size(min = 3, max = 100, message = "O campo NOME deve conter entre {min} e {max} caracteres")
+    @Column(name = "nome")
     private String nome;
 
-    @NotNull
-    @Size(min = 3, max = 100)
-    @Column(name = "descricao", length = 100)
+    @NotNull(message = "O campo DESCRICAO não pode estar nulo")
+    @Size(min = 3, max = 200, message = "O campo DESCRICAO deve conter entre {min} e {max} caracteres")
+    @Column(name = "descricao")
     private String descricao;
 
     @JsonManagedReference

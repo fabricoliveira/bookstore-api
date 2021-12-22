@@ -41,7 +41,7 @@ public class LivroResource {
     }
 
     @PostMapping
-    public ResponseEntity<Livro> create(@RequestParam(value = "categoria", defaultValue = "0") Integer categoriaId, @RequestBody @Valid Livro livro) {
+    public ResponseEntity<Livro> create(@Valid @RequestParam(value = "categoria", defaultValue = "0") Integer categoriaId, @RequestBody @Valid Livro livro) {
         livro = livroService.create(categoriaId, livro);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
