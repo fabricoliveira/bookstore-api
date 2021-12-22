@@ -45,14 +45,19 @@ public class CategoriaService {
 
     @Modifying
     @Transactional
-    public Categoria update(Integer id, Map<Object, Object> categoriaDTOProperties) {
+    public Categoria update(Integer id, Map<Object, Object> categoriaProperties) {
         Categoria categoria = findById(id);
-        categoriaDTOProperties.forEach((key, value) -> {
+        updateProperties(categoriaProperties, categoria);
+        return categoriaRepository.save(categoria);
+
+    }
+
+    private void updateProperties(Map<Object, Object> categoriaProperties, Categoria categoria) {
+        categoriaProperties.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(Categoria.class, (String) key);
             field.setAccessible(true);
             ReflectionUtils.setField(field, categoria, new ObjectMapper().convertValue(value, field.getType()));
         });
-        return categoriaRepository.save(categoria);
     }
 
     public void delete(Integer id) {
