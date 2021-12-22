@@ -1,7 +1,6 @@
 package com.fabricio.bookstore.services;
 
 import com.fabricio.bookstore.domain.Categoria;
-import com.fabricio.bookstore.domain.dto.CategoriaDTO;
 import com.fabricio.bookstore.exceptions.ResourceNotFoundException;
 import com.fabricio.bookstore.repositories.CategoriaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,15 +31,6 @@ public class CategoriaService {
 
     public Categoria create(Categoria categoria) {
         categoria.setId(null);
-        return categoriaRepository.save(categoria);
-    }
-
-    @Modifying
-    @Transactional
-    public Categoria update(Integer id, CategoriaDTO categoriaDTO) {
-        Categoria categoria = findById(id);
-        categoria.setNome((categoriaDTO.getNome()));
-        categoria.setDescricao(categoriaDTO.getDescricao());
         return categoriaRepository.save(categoria);
     }
 
