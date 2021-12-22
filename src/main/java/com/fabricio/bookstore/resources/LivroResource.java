@@ -7,7 +7,10 @@ import com.fabricio.bookstore.services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,5 +37,16 @@ public class LivroResource {
     @PutMapping("/{id}")
     public ResponseEntity<Livro> update(@PathVariable("id") Integer id, @RequestBody Map<Object, Object> livroProperties) throws MethodArgumentNotValidException {
         return ResponseEntity.ok().body(livroService.update(id, livroProperties));
+    }
+
+    @PostMapping
+    public ResponseEntity<Livro> create(@RequestParam(value = "categoria", defaultValue = "0") Integer categoriaId, @RequestBody @Valid Livro livro) {
+        livro = livroService.create(categoriaId, livro);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/{id}")
+                .buildAndExpand(livro.getId())
+                .toUri();
+        return ResponseEntity.created(uri).body(livro);
     }
 }

@@ -52,4 +52,10 @@ public class LivroService {
             ReflectionUtils.setField(field, livro, new ObjectMapper().convertValue(value, field.getType()));
         });
     }
+
+    public Livro create(Integer categoriaId, Livro livro) {
+        livro.setId(null);
+        livro.setCategoria(categoriaService.findById(categoriaId));
+        return livroRepository.save(livro);
+    }
 }
