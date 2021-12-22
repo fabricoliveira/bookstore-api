@@ -2,12 +2,14 @@ package com.fabricio.bookstore.resources;
 
 import com.fabricio.bookstore.domain.Livro;
 import com.fabricio.bookstore.domain.dto.LivroDTO;
+import com.fabricio.bookstore.exceptions.MethodArgumentNotValidException;
 import com.fabricio.bookstore.services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,5 +29,10 @@ public class LivroResource {
         List<Livro> livros = livroService.findAllByCategoria(categoria);
         List<LivroDTO> livroDTOS = livros.stream().map(livro -> new LivroDTO(livro)).collect(Collectors.toList());
         return ResponseEntity.ok().body(livroDTOS);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Livro> update(@PathVariable("id") Integer id, @RequestBody Map<Object, Object> livroProperties) throws MethodArgumentNotValidException {
+        return ResponseEntity.ok().body(livroService.update(id, livroProperties));
     }
 }
