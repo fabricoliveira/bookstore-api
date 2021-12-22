@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface LivroRepository extends JpaRepository<Livro, Integer> {
 
-    //@Query("SELECT l FROM Livro l WHERE l.categoria.id = :categoriaId ORDER BY titulo")
+    //@Query("SELECT livro FROM Livro livro WHERE livro.categoria.id = :categoriaId ORDER BY titulo")
     //List<Livro> findAllByCategoriaOrderByTitulo(@Param(value = "categoriaId") Integer categoriaId);
     List<Livro> findAllByCategoriaOrderByTitulo(Categoria categoria);
 
