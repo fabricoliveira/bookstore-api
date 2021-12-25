@@ -9,10 +9,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Error {
+public class FieldError {
 
-    private Long timestamp;
-    private Integer status;
-    private String error;
+    private String field;
+    private String message;
 
 }
