@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fabricio</groupId>
-	<artifactId>bookstore</artifactId>
+	<artifactId>bookstore-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bookstore</name>
+    <name>bookstore-api</name>
 	<description>Project for Spring Boot and Angular 10</description>
 	<properties>
 		<java.version>11</java.version>
