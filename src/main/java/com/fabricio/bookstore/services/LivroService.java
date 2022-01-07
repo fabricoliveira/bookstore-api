@@ -26,7 +26,7 @@ public class LivroService {
     private CategoriaService categoriaService;
 
     public Livro findById(Integer id) {
-        return livroRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("O recurso não foi encontrado! ID: " + id + ", TIPO: " + Livro.class.getName()));
+        return livroRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("O livro não foi encontrado! ID: " + id + ", TIPO: " + Livro.class.getName()));
     }
 
     public List<Livro> findAllByCategoria(Integer categoriaId) {
@@ -40,7 +40,7 @@ public class LivroService {
         Livro livro = findById(id);
         updateProperties(livroProperties, livro);
         if (livro.getCategoria() == null) {
-            throw new MethodArgumentNotValidException("O recurso ID: " + id + " não pode ser atualizado! A categoria não pode ser nula.");
+            throw new MethodArgumentNotValidException("O livro ID: " + id + " não pode ser atualizado! A categoria não pode ser nula.");
         }
         return livroRepository.save(livro);
     }
