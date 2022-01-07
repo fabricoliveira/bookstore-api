@@ -22,7 +22,7 @@ public class CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     public Categoria findById(Integer id) {
-        return categoriaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("O recurso não foi encontrado! ID: " + id + ", TIPO: " + Categoria.class.getName()));
+        return categoriaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("A categoria não foi encontrada! ID: " + id + ", TIPO: " + Categoria.class.getName()));
     }
 
     public List<Categoria> findAll() {
@@ -55,7 +55,7 @@ public class CategoriaService {
         try {
             categoriaRepository.delete(findById(id));
         } catch(org.springframework.dao.DataIntegrityViolationException e) {
-            throw new com.fabricio.bookstore.exceptions.DataIntegrityViolationException("O recurso não pode ser deletado, possui relacionamento!");
+            throw new com.fabricio.bookstore.exceptions.DataIntegrityViolationException("A categoria não pode ser deletada, possui livros associados!");
         } catch (EmptyResultDataAccessException e) {
         }
     }
