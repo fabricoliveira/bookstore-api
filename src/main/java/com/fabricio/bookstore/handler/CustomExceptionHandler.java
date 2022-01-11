@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.ServletRequest;
+import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class CustomExceptionHandler {
@@ -35,6 +36,15 @@ public class CustomExceptionHandler {
         ValidationError errors = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro na validação dos campos");
         e.getBindingResult().getFieldErrors().forEach(fieldError -> {
             errors.addError(fieldError.getField(), fieldError.getDefaultMessage());
+        });
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Error> validationError(ConstraintViolationException e, ServletRequest request) {
+        ValidationError errors = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro na validação dos campos");
+        e.getConstraintViolations().forEach(constraintViolation -> {
+            errors.addError("", constraintViolation.getMessage());
         });
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }

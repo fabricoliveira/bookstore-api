@@ -12,9 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class LivroService {
@@ -24,6 +28,9 @@ public class LivroService {
 
     @Autowired
     private CategoriaService categoriaService;
+
+    @Autowired
+    private Validator validator;
 
     public Livro findById(Integer id) {
         return livroRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("O livro não foi encontrado! ID: " + id + ", TIPO: " + Livro.class.getName()));
@@ -39,7 +46,11 @@ public class LivroService {
     public Livro update(Integer id, Map<Object, Object> livroProperties) throws MethodArgumentNotValidException {
         Livro livro = findById(id);
         updateProperties(livroProperties, livro);
-        if (livro.getCategoria() == null) {
+
+        Set<ConstraintViolation<Livro>> violations = validator.validate(livro);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        } else if (livro.getCategoria() == null) {
             throw new MethodArgumentNotValidException("O livro ID: " + id + " não pode ser atualizado! A categoria não pode ser nula.");
         }
         return livroRepository.save(livro);

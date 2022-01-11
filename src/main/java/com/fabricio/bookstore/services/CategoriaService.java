@@ -11,15 +11,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class CategoriaService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private Validator validator;
 
     public Categoria findById(Integer id) {
         return categoriaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("A categoria não foi encontrada! ID: " + id + ", TIPO: " + Categoria.class.getName()));
@@ -39,6 +46,10 @@ public class CategoriaService {
     public Categoria update(Integer id, Map<Object, Object> categoriaProperties) {
         Categoria categoria = findById(id);
         updateProperties(categoriaProperties, categoria);
+        Set<ConstraintViolation<Categoria>> violations = validator.validate(categoria);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
         return categoriaRepository.save(categoria);
 
     }
